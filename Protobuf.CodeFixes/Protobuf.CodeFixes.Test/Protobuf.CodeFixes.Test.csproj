@@ -122,12 +122,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProtobufDiagnosticAnalyzerTestsBase.cs" />
+    <Compile Include="ProtobufTagZeroDiagnosticAnalyzerTests.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.Helper.cs" />
     <Compile Include="Verifiers\DiagnosticResult.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.Helper.cs" />
-    <Compile Include="DiagnosticAnalyzerTests.cs" />
+    <Compile Include="ProtobufReservedTagDiagnosticAnalyzerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
