@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Protobuf.CodeFixes
@@ -13,6 +14,11 @@ namespace Protobuf.CodeFixes
                 if (attributeData.AttributeClass.Name != "ProtoMemberAttribute")
                 {
                     continue;
+                }
+
+                if (attributeData.ConstructorArguments.Length == 0)
+                {
+                    return null;
                 }
 
                 var arg = attributeData.ConstructorArguments[0];
