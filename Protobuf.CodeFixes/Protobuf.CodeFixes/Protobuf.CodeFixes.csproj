@@ -33,10 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CodeFixProvider.cs" />
+    <Compile Include="ProtobufAttributeData.cs" />
     <Compile Include="ProtobufReservedTagDiagnosticAnalyzer.cs" />
+    <Compile Include="ProtobufDuplicateTagDiagnosticAnalyzer.cs" />
     <Compile Include="ProtobufTagZeroDiagnosticAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtobufTagDiagnosticAnalyzerBase.cs" />
+    <Compile Include="SymbolExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Diagnostic.nuspec">

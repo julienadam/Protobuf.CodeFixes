@@ -22,13 +22,13 @@ namespace Protobuf.CodeFixes.Test
         [Fact]
         public void Tag_set_to_zero_on_property_triggers_error()
         {
-            VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(0), GetExpectedError("SomeProperty"));
+            VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(0), GetExpectedErrorOnSingleTag("SomeProperty"));
         }
 
         [Fact]
         public void Tag_set_to_zero_on_field_triggers_error()
         {
-            VerifyCSharpDiagnostic(GetOneTagFieldClassSource(0), GetExpectedError("SomeField"));
+            VerifyCSharpDiagnostic(GetOneTagFieldClassSource(0), GetExpectedErrorOnSingleTag("SomeField"));
         }
     }
 }

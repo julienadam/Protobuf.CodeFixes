@@ -25,7 +25,7 @@ namespace Protobuf.CodeFixes.Test
         [InlineData(19999)]
         public void Protomember_with_tag_on_property_in_reserved_range_show_as_error(int tag)
         {
-           VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(tag), GetExpectedError(tag, "SomeProperty"));
+           VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(tag), GetExpectedErrorOnSingleTag(tag, "SomeProperty"));
         }
 
         [Theory]
@@ -34,7 +34,7 @@ namespace Protobuf.CodeFixes.Test
         [InlineData(19999)]
         public void Protomember_with_tag_on_field_in_reserved_range_show_as_error(int tag)
         {
-           VerifyCSharpDiagnostic(GetOneTagFieldClassSource(tag), GetExpectedError(tag, "SomeField"));
+           VerifyCSharpDiagnostic(GetOneTagFieldClassSource(tag), GetExpectedErrorOnSingleTag(tag, "SomeField"));
         }
     }
 }

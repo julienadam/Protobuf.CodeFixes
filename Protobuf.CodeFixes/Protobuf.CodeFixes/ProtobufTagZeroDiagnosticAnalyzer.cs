@@ -21,7 +21,7 @@ namespace Protobuf.CodeFixes
         {
             if (value == 0)
             {
-                var diagnostic = Diagnostic.Create(Rule, GetTagArgumentLocation(attributeData), context.Symbol.Name);
+                var diagnostic = Diagnostic.Create(Rule, attributeData.GetFirstArgumentLocation(), context.Symbol.Name);
                 context.ReportDiagnostic(diagnostic);
             }
         }

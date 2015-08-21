@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ProtobufDiagnosticAnalyzerTestsBase.cs" />
+    <Compile Include="ProtobufDuplicateTagDiagnosticAnalyzerTests.cs" />
     <Compile Include="ProtobufTagZeroDiagnosticAnalyzerTests.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.cs" />

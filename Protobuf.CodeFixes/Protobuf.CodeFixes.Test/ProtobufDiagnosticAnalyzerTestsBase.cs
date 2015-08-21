@@ -9,6 +9,7 @@ namespace Protobuf.CodeFixes.Test
     public abstract class ProtobufDiagnosticAnalyzerTestsBase<T> : DiagnosticVerifier where T: DiagnosticAnalyzer, new()
     {
         private const string Placeholder = "$tag$";
+        private const string Placeholder2 = "$tag2$";
         private const string OneTagPropertyClassSource = @"    using System;
     using ProtoBuf;
 
@@ -43,6 +44,28 @@ namespace Protobuf.CodeFixes.Test
             return OneTagFieldClassSource.Replace(Placeholder, tag.ToString());
         }
 
+
+        private const string TwoTagClassSource = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(" + Placeholder + @")]
+            public string SomeProperty { get; set; }
+
+            [ProtoMember(" + Placeholder2 + @")]
+            public string SomeField;
+        }
+    }";
+
+        protected string GetTwoTagClassSource(int tag1, int tag2)
+        {
+            return TwoTagClassSource.Replace(Placeholder, tag1.ToString()).Replace(Placeholder2, tag2.ToString());
+        }
+
+
         protected override IEnumerable<MetadataReference> GetAdditionalReferences()
         {
             yield return MetadataReference.CreateFromFile("protobuf-net.dll");
@@ -62,16 +85,20 @@ namespace Protobuf.CodeFixes.Test
         protected abstract string DiagnosticId { get; }
         protected abstract string MessageFormat { get; }
 
-        protected DiagnosticResult GetExpectedError(params object[] formatParameters)
+        protected DiagnosticResult GetExpectedError(int line, int column, params object[] formatParameters)
         {
-            var expected = new DiagnosticResult
+            return new DiagnosticResult
             {
                 Id = DiagnosticId,
                 Message = string.Format(MessageFormat, formatParameters),
                 Severity = DiagnosticSeverity.Error,
-                Locations = new[] {new DiagnosticResultLocation("Test0.cs", 8, 26)}
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", line, column) }
             };
-            return expected;
+        }
+
+        protected DiagnosticResult GetExpectedErrorOnSingleTag(params object[] formatParameters)
+        {
+            return GetExpectedError(8, 26, formatParameters);
         }
     }
 }
