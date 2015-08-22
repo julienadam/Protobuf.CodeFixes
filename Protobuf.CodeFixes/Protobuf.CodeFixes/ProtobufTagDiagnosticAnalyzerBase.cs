@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Protobuf.CodeFixes.AttributeData;
 
 namespace Protobuf.CodeFixes
 {
@@ -14,16 +15,16 @@ namespace Protobuf.CodeFixes
 
         protected void AnalyzeSymbol(SymbolAnalysisContext context)
         {
-            var protobufAttribute = context.Symbol.GetProtoMemberAttributeData();
+            var protobufAttribute = context.Symbol.GetProtobufAttributeData();
             if (protobufAttribute == null)
             {
                 return;
             }
 
-            AnalyzeSymbolCore(protobufAttribute.Tag, protobufAttribute.AttributeData, context);
+            AnalyzeSymbolCore(protobufAttribute, context);
         }
 
-        protected abstract void AnalyzeSymbolCore(int value, AttributeData attributeData, SymbolAnalysisContext context);
+        protected abstract void AnalyzeSymbolCore(IEnumerable<ProtobufAttributeData> protobufAttributes, SymbolAnalysisContext context);
 
     }
 }

@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Protobuf.CodeFixes.AttributeData;
 
 namespace Protobuf.CodeFixes
 {
@@ -18,13 +21,11 @@ namespace Protobuf.CodeFixes
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        protected override void AnalyzeSymbolCore(int value, AttributeData attributeData, SymbolAnalysisContext context)
+        protected override void AnalyzeSymbolCore(IEnumerable<ProtobufAttributeData> attributes, SymbolAnalysisContext context)
         {
-            if (value >= 19000 && value <= 19999)
+            foreach(var attributeData in attributes.Where(a => a.Tag >= 19000 && a.Tag <= 19999))
             {
-                var attributeSyntax = (AttributeSyntax)attributeData.ApplicationSyntaxReference.GetSyntax();
-                var diagnostic = Diagnostic.Create(Rule, attributeSyntax.ArgumentList.Arguments[0].GetLocation(), value, context.Symbol.Name);
-                context.ReportDiagnostic(diagnostic);
+                context.ReportDiagnostic(Diagnostic.Create(Rule, attributeData.GetLocation(), attributeData.Tag, context.Symbol.Name));
             }
         }
     }

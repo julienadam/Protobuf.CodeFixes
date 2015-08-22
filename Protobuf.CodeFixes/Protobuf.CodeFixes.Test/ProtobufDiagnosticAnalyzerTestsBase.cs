@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Protobuf.CodeFixes.Test.Verifiers;
+using ProtoBuf;
 using Xunit;
 
 namespace Protobuf.CodeFixes.Test
@@ -68,7 +70,8 @@ namespace Protobuf.CodeFixes.Test
 
         protected override IEnumerable<MetadataReference> GetAdditionalReferences()
         {
-            yield return MetadataReference.CreateFromFile("protobuf-net.dll");
+            yield return MetadataReference.CreateFromFile(typeof(ProtoContractAttribute).Assembly.Location);
+            yield return MetadataReference.CreateFromFile(typeof(DataContractAttribute).Assembly.Location);
         }
 
         [Fact]

@@ -28,7 +28,7 @@ namespace Protobuf.CodeFixes
             var type = (INamedTypeSymbol) context.Symbol;
             var members = type.GetMembers();
             var groupedByTag = members
-                .Select(m => m.GetProtoMemberAttributeData())
+                .SelectMany(m => m.GetProtobufAttributeData())
                 .Where(a => a != null)
                 .GroupBy(m => m.Tag);
 
