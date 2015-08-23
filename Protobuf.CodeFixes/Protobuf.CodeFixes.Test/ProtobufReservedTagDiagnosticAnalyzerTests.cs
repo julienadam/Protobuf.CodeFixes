@@ -10,13 +10,35 @@ namespace Protobuf.CodeFixes.Test
         [Fact]
         public void No_error_on_non_reserved_tag_for_property()
         {
-            VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(1));
+            const string source = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(1)]
+            public string SomeField;
+        }
+    }";
+            VerifyCSharpDiagnostic(source);
         }
 
         [Fact]
         public void No_error_on_non_reserved_tag_for_field()
         {
-            VerifyCSharpDiagnostic(GetOneTagFieldClassSource(1));
+            const string source = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(1)]
+            public string SomeField;
+        }
+    }";
+            VerifyCSharpDiagnostic(source);
         }
 
         [Theory]
@@ -25,7 +47,18 @@ namespace Protobuf.CodeFixes.Test
         [InlineData(19999)]
         public void Protomember_with_tag_on_property_in_reserved_range_show_as_error(int tag)
         {
-            VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(tag), GetExpectedErrorOnSingleTag(tag, "SomeProperty"));
+           var source = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(" + tag + @")]
+            public string SomeProperty { get; set; }
+        }
+    }";
+            VerifyCSharpDiagnostic(source, GetExpectedError(8, 26, tag, "SomeProperty"));
         }
 
         [Theory]
@@ -34,19 +67,18 @@ namespace Protobuf.CodeFixes.Test
         [InlineData(19999)]
         public void Datamember_with_tag_on_property_in_reserved_range_show_as_error(int tag)
         {
-            var dataContractPropertyClass = @"    using System;
+            var source = @"    using System;
     using System.Runtime.Serialization;
 
     namespace Samples
     {
         class SampleType
         {   
-            [DataMember(Order = $tag$)]
+            [DataMember(Order = " + tag + @")]
             public string SomeProperty { get; set; }
         }
     }";
 
-            var source = dataContractPropertyClass.Replace("$tag$", tag.ToString());
             VerifyCSharpDiagnostic(source, GetExpectedError(8, 33, tag, "SomeProperty"));
         }
 
@@ -56,7 +88,18 @@ namespace Protobuf.CodeFixes.Test
         [InlineData(19999)]
         public void Protomember_with_tag_on_field_in_reserved_range_show_as_error(int tag)
         {
-            VerifyCSharpDiagnostic(GetOneTagFieldClassSource(tag), GetExpectedErrorOnSingleTag(tag, "SomeField"));
+            var source = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(" + tag + @")]
+            public string SomeField;
+        }
+    }";
+            VerifyCSharpDiagnostic(source, GetExpectedError(8, 26, tag, "SomeField"));
         }
 
         [Theory]
@@ -72,7 +115,7 @@ namespace Protobuf.CodeFixes.Test
     {
         class SampleType
         {   
-            [DataMember(Order = $tag$)]
+            [DataMember(Order = " + tag + @")]
             public string SomeField;
         }
     }";

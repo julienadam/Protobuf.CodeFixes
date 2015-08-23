@@ -10,43 +10,6 @@ namespace Protobuf.CodeFixes.Test
 {
     public abstract class ProtobufDiagnosticAnalyzerTestsBase<T> : DiagnosticVerifier where T: DiagnosticAnalyzer, new()
     {
-        private const string Placeholder = "$tag$";
-        private const string Placeholder2 = "$tag2$";
-        private const string OneTagPropertyClassSource = @"    using System;
-    using ProtoBuf;
-
-    namespace Samples
-    {
-        class SampleType
-        {   
-            [ProtoMember("+ Placeholder + @")]
-            public string SomeProperty { get; set; }
-        }
-    }";
-
-        protected string GetOneTagPropertyClassSource(int tag)
-        {
-            return OneTagPropertyClassSource.Replace(Placeholder, tag.ToString());
-        }
-
-        private const string OneTagFieldClassSource = @"    using System;
-    using ProtoBuf;
-
-    namespace Samples
-    {
-        class SampleType
-        {   
-            [ProtoMember(" + Placeholder + @")]
-            public string SomeField;
-        }
-    }";
-
-        protected string GetOneTagFieldClassSource(int tag)
-        {
-            return OneTagFieldClassSource.Replace(Placeholder, tag.ToString());
-        }
-
-        
         protected override IEnumerable<MetadataReference> GetAdditionalReferences()
         {
             yield return MetadataReference.CreateFromFile(typeof(ProtoContractAttribute).Assembly.Location);
@@ -76,11 +39,6 @@ namespace Protobuf.CodeFixes.Test
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", line, column) }
             };
-        }
-
-        protected DiagnosticResult GetExpectedErrorOnSingleTag(params object[] formatParameters)
-        {
-            return GetExpectedError(8, 26, formatParameters);
         }
     }
 }

@@ -10,19 +10,41 @@ namespace Protobuf.CodeFixes.Test
         [Fact]
         public void No_error_for_tag_set_to_non_zero_on_property()
         {
-            VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(1));
+            const string source = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(1)]
+            public string SomeProperty { get; set}
+        }
+    }";
+            VerifyCSharpDiagnostic(source);
         }
 
         [Fact]
         public void No_error_for_tag_set_to_non_zero_on_field()
         {
-            VerifyCSharpDiagnostic(GetOneTagFieldClassSource(1));
+            const string source = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(1)]
+            public string SomeField;
+        }
+    }";
+            VerifyCSharpDiagnostic(source);
         }
 
         [Fact]
         public void Datamember_tag_set_to_zero_on_property_triggers_error()
         {
-            var dataContractPropertyClass = @"    using System;
+            const string source = @"    using System;
     using System.Runtime.Serialization;
 
     namespace Samples
@@ -33,13 +55,13 @@ namespace Protobuf.CodeFixes.Test
             public string SomeProperty { get; set; }
         }
     }";
-            VerifyCSharpDiagnostic(dataContractPropertyClass, GetExpectedError(8, 33, "SomeProperty"));
+            VerifyCSharpDiagnostic(source, GetExpectedError(8, 33, "SomeProperty"));
         }
 
         [Fact]
         public void Datamember_tag_set_to_zero_on_field_triggers_error()
         {
-            var dataContractPropertyClass = @"    using System;
+            const string source = @"    using System;
     using System.Runtime.Serialization;
 
     namespace Samples
@@ -50,19 +72,41 @@ namespace Protobuf.CodeFixes.Test
             public string SomeField;
         }
     }";
-            VerifyCSharpDiagnostic(dataContractPropertyClass, GetExpectedError(8, 33, "SomeField"));
+            VerifyCSharpDiagnostic(source, GetExpectedError(8, 33, "SomeField"));
         }
 
         [Fact]
         public void Tag_set_to_zero_on_property_triggers_error()
         {
-            VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(0), GetExpectedErrorOnSingleTag("SomeProperty"));
+            const string source = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(0)]
+            public string SomeProperty { get; set}
+        }
+    }";
+            VerifyCSharpDiagnostic(source, GetExpectedError(8, 26, "SomeProperty"));
         }
 
         [Fact]
         public void Tag_set_to_zero_on_field_triggers_error()
         {
-            VerifyCSharpDiagnostic(GetOneTagFieldClassSource(0), GetExpectedErrorOnSingleTag("SomeField"));
+            const string source = @"    using System;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(0)]
+            public string SomeField;
+        }
+    }";
+            VerifyCSharpDiagnostic(source, GetExpectedError(8, 26, "SomeField"));
         }
     }
 }
