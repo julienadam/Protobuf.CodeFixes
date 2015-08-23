@@ -9,10 +9,15 @@ At this point it checks for:
 * Tags set to 0
 * Tags in the reserved range 19000-19999
 * Duplicate tags
+* Inconsistencies between `DataMember` / `ProtoMember`
+* Tags set to negative values
 
-Future releases should include more complex analysis such as:
-* Suport for `DataContract` / `DataMember`
-* Inconsistencies between `DataContract` / `DataMember` and `ProtoContract` / `ProtoMember`
-* Missing `KnownType` / `ProtoInclude`
+Planned features:
+* Duplicate tags for `KnownType` / `ProtoInclude`
+* Missing `KnownType` / `ProtoInclude` for derived classes with `DataContract` / `ProtoContract` / `ProtoMember` / `DataMember` attributes
+* Inconsistencies between `DataContract` / `ProtoContract`
+* Re-number tags on existing `ProtoMember` / `DataMember` attributes
+* Add tags to properties or fields on existing class marked with *Contract attributes
+* Switching from Data* to Proto* tags
 
-This is a work in progress, the VS extension and nuget packages are not published anywhere yet. They will be when a minimum set of diagnotics and fixes are available. Anyone can use them though, just build the solution and register the extension in Visual Studio, or add the nupkg to a local repo.
+The vsix extension is available as an artifact on the [Appveyor build](https://ci.appveyor.com/project/julienadam/protobuf-codefixes/build/artifacts).
