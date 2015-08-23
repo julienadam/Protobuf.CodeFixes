@@ -46,28 +46,7 @@ namespace Protobuf.CodeFixes.Test
             return OneTagFieldClassSource.Replace(Placeholder, tag.ToString());
         }
 
-
-        private const string TwoTagClassSource = @"    using System;
-    using ProtoBuf;
-
-    namespace Samples
-    {
-        class SampleType
-        {   
-            [ProtoMember(" + Placeholder + @")]
-            public string SomeProperty { get; set; }
-
-            [ProtoMember(" + Placeholder2 + @")]
-            public string SomeField;
-        }
-    }";
-
-        protected string GetTwoTagClassSource(int tag1, int tag2)
-        {
-            return TwoTagClassSource.Replace(Placeholder, tag1.ToString()).Replace(Placeholder2, tag2.ToString());
-        }
-
-
+        
         protected override IEnumerable<MetadataReference> GetAdditionalReferences()
         {
             yield return MetadataReference.CreateFromFile(typeof(ProtoContractAttribute).Assembly.Location);

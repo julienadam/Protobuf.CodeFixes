@@ -38,7 +38,7 @@ namespace Protobuf.CodeFixes
 
                 foreach (var a in group)
                 {
-                    var diagnostic = Diagnostic.Create(Rule, a.AttributeData.GetFirstArgumentLocation(), a.Tag, symbolList);
+                    var diagnostic = Diagnostic.Create(Rule, a.GetLocation(), a.Tag, symbolList);
                     context.ReportDiagnostic(diagnostic);
                 }
             }
