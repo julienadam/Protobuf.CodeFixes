@@ -39,6 +39,7 @@
     <Compile Include="DuplicateTagDiagnosticAnalyzer.cs" />
     <Compile Include="ProtoMemberDataMemberTagMismatchDiagnosticAnalyzer.cs" />
     <Compile Include="NegativeTagDiagnosticAnalyzer.cs" />
+    <Compile Include="MemberWithoutContractDiagnosticAnalyzer.cs" />
     <Compile Include="TagZeroDiagnosticAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtobufTagDiagnosticAnalyzerBase.cs" />

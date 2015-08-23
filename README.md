@@ -9,7 +9,7 @@ At this point it checks for:
 * Tags set to 0
 * Tags in the reserved range 19000-19999
 * Duplicate tags
-* Inconsistencies between `DataMember` / `ProtoMember`
+* Inconsistencies between `DataMember` and `ProtoMember` tags
 * Tags set to negative values
 
 Planned features:

@@ -127,6 +127,7 @@
     <Compile Include="DuplicateTagDiagnosticAnalyzerTests.cs" />
     <Compile Include="ProtoMemberDataMemberTagMismatchDiagnosticAnalyzerTests.cs" />
     <Compile Include="NegativeTagDiagnosticAnalyzerTests.cs" />
+    <Compile Include="MemberWithoutContractDiagnosticAnalyzerTests.cs" />
     <Compile Include="TagZeroDiagnosticAnalyzerTests.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.cs" />
