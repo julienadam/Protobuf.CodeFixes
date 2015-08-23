@@ -8,7 +8,7 @@ using Protobuf.CodeFixes.AttributeData;
 namespace Protobuf.CodeFixes
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ProtobufTagZeroDiagnosticAnalyzer : ProtobufTagDiagnosticAnalyzerBase
+    public class TagZeroDiagnosticAnalyzer : ProtobufTagDiagnosticAnalyzerBase
     {
         public const string DiagnosticId = "Protobuf-net code fixes : tag is zero";
         public const string Title = "Protobuf-net code fixes : tag is zero";

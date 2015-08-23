@@ -2,10 +2,10 @@
 
 namespace Protobuf.CodeFixes.Test
 {
-    public class ProtobufTagZeroDiagnosticAnalyzerTests : ProtobufDiagnosticAnalyzerTestsBase<ProtobufTagZeroDiagnosticAnalyzer>
+    public class TagZeroDiagnosticAnalyzerTests : ProtobufDiagnosticAnalyzerTestsBase<TagZeroDiagnosticAnalyzer>
     {
-        protected override string DiagnosticId { get; } = ProtobufTagZeroDiagnosticAnalyzer.DiagnosticId;
-        protected override string MessageFormat { get; } = ProtobufTagZeroDiagnosticAnalyzer.MessageFormat;
+        protected override string DiagnosticId { get; } = TagZeroDiagnosticAnalyzer.DiagnosticId;
+        protected override string MessageFormat { get; } = TagZeroDiagnosticAnalyzer.MessageFormat;
 
         [Fact]
         public void No_error_for_tag_set_to_non_zero_on_property()

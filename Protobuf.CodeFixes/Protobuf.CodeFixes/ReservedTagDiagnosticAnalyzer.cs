@@ -9,7 +9,7 @@ using Protobuf.CodeFixes.AttributeData;
 namespace Protobuf.CodeFixes
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ProtobufReservedTagDiagnosticAnalyzer : ProtobufTagDiagnosticAnalyzerBase
+    public class ReservedTagDiagnosticAnalyzer : ProtobufTagDiagnosticAnalyzerBase
     {
         public const string DiagnosticId = "Protobuf-net code fixes : tag is in the reserved range [19000-19999]";
         public const string Title = "Protobuf-net code fixes : tag is in the reserved range [19000-19999]";

@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace Protobuf.CodeFixes
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ProtobufDuplicateTagDiagnosticAnalyzer : DiagnosticAnalyzer
+    public class DuplicateTagDiagnosticAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "Protobuf-net code fixes : duplicate tag";
         public const string Title = "Protobuf-net code fixes : duplicate tag";
