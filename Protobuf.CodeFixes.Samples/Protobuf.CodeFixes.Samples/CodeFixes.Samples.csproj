@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,7 +47,8 @@
   <ItemGroup>
     <Compile Include="DuplicateTags.cs" />
     <Compile Include="ReservedTags.cs" />
-    <Compile Include="ZeroTagField.cs" />
+    <Compile Include="ZeroTagDataMemberField.cs" />
+    <Compile Include="ZeroTagProtoMemberField.cs" />
     <Compile Include="ZeroTagProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
