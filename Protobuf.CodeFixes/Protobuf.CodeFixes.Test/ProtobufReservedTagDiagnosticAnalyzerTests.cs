@@ -25,7 +25,29 @@ namespace Protobuf.CodeFixes.Test
         [InlineData(19999)]
         public void Protomember_with_tag_on_property_in_reserved_range_show_as_error(int tag)
         {
-           VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(tag), GetExpectedErrorOnSingleTag(tag, "SomeProperty"));
+            VerifyCSharpDiagnostic(GetOneTagPropertyClassSource(tag), GetExpectedErrorOnSingleTag(tag, "SomeProperty"));
+        }
+
+        [Theory]
+        [InlineData(19000)]
+        [InlineData(19500)]
+        [InlineData(19999)]
+        public void Datamember_with_tag_on_property_in_reserved_range_show_as_error(int tag)
+        {
+            var dataContractPropertyClass = @"    using System;
+    using System.Runtime.Serialization;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [DataMember(Order = $tag$)]
+            public string SomeProperty { get; set; }
+        }
+    }";
+
+            var source = dataContractPropertyClass.Replace("$tag$", tag.ToString());
+            VerifyCSharpDiagnostic(source, GetExpectedError(8, 33, tag, "SomeProperty"));
         }
 
         [Theory]
@@ -34,7 +56,29 @@ namespace Protobuf.CodeFixes.Test
         [InlineData(19999)]
         public void Protomember_with_tag_on_field_in_reserved_range_show_as_error(int tag)
         {
-           VerifyCSharpDiagnostic(GetOneTagFieldClassSource(tag), GetExpectedErrorOnSingleTag(tag, "SomeField"));
+            VerifyCSharpDiagnostic(GetOneTagFieldClassSource(tag), GetExpectedErrorOnSingleTag(tag, "SomeField"));
+        }
+
+        [Theory]
+        [InlineData(19000)]
+        [InlineData(19500)]
+        [InlineData(19999)]
+        public void Datamember_with_tag_on_field_in_reserved_range_show_as_error(int tag)
+        {
+            var dataContractPropertyClass = @"    using System;
+    using System.Runtime.Serialization;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [DataMember(Order = $tag$)]
+            public string SomeField;
+        }
+    }";
+
+            var source = dataContractPropertyClass.Replace("$tag$", tag.ToString());
+            VerifyCSharpDiagnostic(source, GetExpectedError(8, 33, tag, "SomeField"));
         }
     }
 }
