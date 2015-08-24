@@ -58,7 +58,7 @@ namespace Protobuf.CodeFixes.Test
             public string SomeProperty { get; set}
         }
     }";
-            VerifyCSharpDiagnostic(source, GetExpectedWarning(6, 15, "Proto", "SomeProperty", "SampleType"));
+            VerifyCSharpDiagnostic(source, GetExpectedWarning(6, 15, "SampleType"));
         }
 
         [Fact]
@@ -75,7 +75,28 @@ namespace Protobuf.CodeFixes.Test
             public string SomeProperty { get; set}
         }
     }";
-            VerifyCSharpDiagnostic(source, GetExpectedWarning(6, 15, "Data", "SomeProperty", "SampleType"));
+            VerifyCSharpDiagnostic(source, GetExpectedWarning(6, 15, "SampleType"));
+        }
+
+        [Fact]
+        public void Class_with_two_datamember_but_no_datacontract_causes_only_one_warning()
+        {
+            const string source = @"    using System;
+    using System.Runtime.Serialization;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [DataMember(Order = 1)]
+            public string SomeProperty { get; set}
+
+            [ProtoMember(2)]
+            public string SomeProperty { get; set}
+        }
+    }";
+            VerifyCSharpDiagnostic(source, GetExpectedWarning(7, 15, "SampleType"));
         }
     }
 }
