@@ -90,5 +90,7 @@ namespace Protobuf.CodeFixes
             var attributeSyntax = (AttributeSyntax)attributeData.ApplicationSyntaxReference.GetSyntax();
             return attributeSyntax.ArgumentList.Arguments[0].GetLocation();
         }
+
+
     }
 }

@@ -9,5 +9,10 @@ namespace Protobuf.CodeFixes.AttributeData
         public ISymbol Symbol { get; set; }
 
         public abstract Location GetLocation();
+
+        public virtual string GetRelevantSymbolName()
+        {
+            return Symbol.Name;
+        }
     }
 }

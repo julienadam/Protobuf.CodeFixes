@@ -37,6 +37,7 @@
     <Compile Include="CodeFixProvider.cs" />
     <Compile Include="AttributeData\DataMemberAttributeData.cs" />
     <Compile Include="AttributeData\ProtobufAttributeData.cs" />
+    <Compile Include="DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer.cs" />
     <Compile Include="DuplicateTagOnIncludeDiagnosticAnalyzer.cs" />
     <Compile Include="ReservedTagDiagnosticAnalyzer.cs" />
     <Compile Include="DuplicateTagDiagnosticAnalyzer.cs" />

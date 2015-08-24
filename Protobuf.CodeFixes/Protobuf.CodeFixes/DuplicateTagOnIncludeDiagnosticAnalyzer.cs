@@ -10,7 +10,7 @@ namespace Protobuf.CodeFixes
     {
         public const string DiagnosticId = "Protobuf-net code fixes : duplicate tag on includes";
         public const string Title = "Protobuf-net code fixes : duplicate tag on includes";
-        public const string MessageFormat = "Duplicate ProtoInclude / KnownType tag {0} on {1}";
+        public const string MessageFormat = "Duplicate ProtoInclude tag {0} on {1}";
         public const string Description = "The Protocol Buffers specifications forbid using the same tag more than once, including tags used for subtypes";
         public const string Category = "Protobuf";
 

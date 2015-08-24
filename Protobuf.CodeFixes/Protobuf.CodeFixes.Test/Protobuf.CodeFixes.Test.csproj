@@ -123,6 +123,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzerTests.cs" />
     <Compile Include="DuplicateTagOnIncludeDiagnosticAnalyzerTests.cs" />
     <Compile Include="ProtobufDiagnosticAnalyzerTestsBase.cs" />
     <Compile Include="DuplicateTagDiagnosticAnalyzerTests.cs" />

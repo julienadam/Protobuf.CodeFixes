@@ -6,16 +6,15 @@ A set of [Roslyn](https://github.com/dotnet/roslyn) diagnostics and fixes for [P
 This will check for common errors when writing classes that are decorated with [Protobuf-net](https://github.com/mgravell/protobuf-net) attributes for [protocol buffers](https://developers.google.com/protocol-buffers/) serialization.
 
 At this point it checks for:
-* Tags set to 0
-* Tags in the reserved range 19000-19999
-* Duplicate tags
-* Inconsistencies between `DataMember` and `ProtoMember` tags
-* Tags set to negative values
-* `DataMember` or `ProtoMember` found on class without `DataContract` or `ProtoContract`
+* ERROR : Tags set to 0
+* ERROR : Tags in the reserved range 19000-19999
+* ERROR : Duplicate tags, including collisions with ProtoInclude tags
+* ERROR : Inconsistencies between `DataMember` and `ProtoMember` tags
+* ERROR : Tags set to negative values
+* WARNING : `DataMember` or `ProtoMember` found on class without `DataContract` or `ProtoContract`
 
 Planned features:
-* Duplicate tags for `KnownType` / `ProtoInclude` including collisions with `ProtoMember` / `DataMember` tags
-* Missing `KnownType` / `ProtoInclude` for derived classes with `DataContract` / `ProtoContract` / `ProtoMember` / `DataMember` attributes
+* Missing `ProtoInclude` for derived classes with `DataContract` / `ProtoContract` / `ProtoMember` / `DataMember` attributes
 * Inconsistencies between `DataContract` / `ProtoContract`
 * Re-number tags on existing `ProtoMember` / `DataMember` attributes
 * Add tags to properties or fields on existing class marked with *Contract attributes
