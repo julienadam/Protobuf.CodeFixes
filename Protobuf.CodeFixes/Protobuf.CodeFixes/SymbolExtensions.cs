@@ -7,7 +7,37 @@ namespace Protobuf.CodeFixes
 {
     public static class SymbolExtensions
     {
-        public static IEnumerable<ProtobufAttributeData> GetProtobufAttributeData(this ISymbol symbol)
+        public static IEnumerable<IncludeAttributeData> GetIncludeAttributeData(this ISymbol symbol)
+
+        {
+            var attributes = symbol.GetAttributes();
+            foreach (var attributeData in attributes)
+            {
+                switch (attributeData.AttributeClass.Name)
+                {
+                    case "ProtoIncludeAttribute":
+                        if (attributeData.ConstructorArguments.Length == 0)
+                        {
+                            continue;
+                        }
+
+                        var arg = attributeData.ConstructorArguments[0];
+                        // TODO: resolve static references, consts etc ?
+                        if (arg.Value is int)
+                        {
+                            yield return new ProtoIncludeAttributeData
+                            {
+                                AttributeData = attributeData,
+                                Tag = (int)arg.Value,
+                                Symbol = symbol,
+                            };
+                        }
+                        break;
+                }
+            }
+        }
+
+        public static IEnumerable<ProtobufAttributeData> GetMemberAttributeData(this ISymbol symbol)
         {
             var attributes = symbol.GetAttributes();
             foreach (var attributeData in attributes)

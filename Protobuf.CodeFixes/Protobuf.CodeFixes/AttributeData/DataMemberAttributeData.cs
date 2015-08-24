@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Protobuf.CodeFixes.AttributeData
 {
-    public class DataMemberAttributeData : ProtobufAttributeData
+    public class DataMemberAttributeData : MemberAttributeData
     {
         public override Location GetLocation()
         {

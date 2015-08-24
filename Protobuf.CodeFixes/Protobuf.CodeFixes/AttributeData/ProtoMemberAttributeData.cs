@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Protobuf.CodeFixes.AttributeData
 {
-    public class ProtoMemberAttributeData : ProtobufAttributeData
+    public class ProtoMemberAttributeData : MemberAttributeData
     {
         public override Location GetLocation()
         {

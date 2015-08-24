@@ -30,7 +30,7 @@ namespace Protobuf.CodeFixes
             var type = (INamedTypeSymbol)context.Symbol;
             var membersWithAttributes = type
                 .GetMembers()
-                .Select(m => m.GetProtobufAttributeData())
+                .Select(m => m.GetMemberAttributeData())
                 .Where(a => a != null);
 
             if (membersWithAttributes.Any())

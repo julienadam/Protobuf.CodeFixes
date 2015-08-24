@@ -15,7 +15,7 @@ namespace Protobuf.CodeFixes
 
         protected void AnalyzeSymbol(SymbolAnalysisContext context)
         {
-            var protobufAttribute = context.Symbol.GetProtobufAttributeData();
+            var protobufAttribute = context.Symbol.GetMemberAttributeData();
             if (protobufAttribute == null)
             {
                 return;
