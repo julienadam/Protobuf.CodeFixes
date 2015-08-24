@@ -45,7 +45,7 @@ namespace Protobuf.CodeFixes.Test
         }
 
         [Fact]
-        public void Class_with_protomember_but_no_protocontract_causes_error()
+        public void Class_with_protomember_but_no_protocontract_causes_warning()
         {
             const string source = @"    using System;
     using ProtoBuf;
@@ -58,11 +58,11 @@ namespace Protobuf.CodeFixes.Test
             public string SomeProperty { get; set}
         }
     }";
-            VerifyCSharpDiagnostic(source, GetExpectedError(6, 15, "Proto", "SomeProperty", "SampleType"));
+            VerifyCSharpDiagnostic(source, GetExpectedWarning(6, 15, "Proto", "SomeProperty", "SampleType"));
         }
 
         [Fact]
-        public void Class_with_datamember_but_no_datacontract_causes_error()
+        public void Class_with_datamember_but_no_datacontract_causes_warning()
         {
             const string source = @"    using System;
     using System.Runtime.Serialization;
@@ -75,7 +75,7 @@ namespace Protobuf.CodeFixes.Test
             public string SomeProperty { get; set}
         }
     }";
-            VerifyCSharpDiagnostic(source, GetExpectedError(6, 15, "Data", "SomeProperty", "SampleType"));
+            VerifyCSharpDiagnostic(source, GetExpectedWarning(6, 15, "Data", "SomeProperty", "SampleType"));
         }
     }
 }

@@ -11,9 +11,10 @@ At this point it checks for:
 * Duplicate tags
 * Inconsistencies between `DataMember` and `ProtoMember` tags
 * Tags set to negative values
+* `DataMember` or `ProtoMember` found on class without `DataContract` or `ProtoContract`
 
 Planned features:
-* Duplicate tags for `KnownType` / `ProtoInclude`
+* Duplicate tags for `KnownType` / `ProtoInclude` including collisions with `ProtoMember` / `DataMember` tags
 * Missing `KnownType` / `ProtoInclude` for derived classes with `DataContract` / `ProtoContract` / `ProtoMember` / `DataMember` attributes
 * Inconsistencies between `DataContract` / `ProtoContract`
 * Re-number tags on existing `ProtoMember` / `DataMember` attributes

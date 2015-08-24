@@ -30,15 +30,25 @@ namespace Protobuf.CodeFixes.Test
         protected abstract string DiagnosticId { get; }
         protected abstract string MessageFormat { get; }
 
-        protected DiagnosticResult GetExpectedError(int line, int column, params object[] formatParameters)
+        private DiagnosticResult GetExpectedResult(int line, int column, DiagnosticSeverity diagnosticSeverity, object[] formatParameters)
         {
             return new DiagnosticResult
             {
                 Id = DiagnosticId,
                 Message = string.Format(MessageFormat, formatParameters),
-                Severity = DiagnosticSeverity.Error,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", line, column) }
+                Severity = diagnosticSeverity,
+                Locations = new[] {new DiagnosticResultLocation("Test0.cs", line, column)}
             };
+        }
+
+        protected DiagnosticResult GetExpectedError(int line, int column, params object[] formatParameters)
+        {
+            return GetExpectedResult(line, column, DiagnosticSeverity.Error, formatParameters);
+        }
+
+        protected DiagnosticResult GetExpectedWarning(int line, int column, params object[] formatParameters)
+        {
+            return GetExpectedResult(line, column, DiagnosticSeverity.Warning, formatParameters);
         }
     }
 }

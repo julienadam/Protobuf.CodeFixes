@@ -16,7 +16,7 @@ namespace Protobuf.CodeFixes
         public const string Description = "A class with members that have ProtoMember or ProtoContract attributes must have a ProtoContract and/or DataContract attribute";
         public const string Category = "Protobuf";
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Error, true, Description);
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
