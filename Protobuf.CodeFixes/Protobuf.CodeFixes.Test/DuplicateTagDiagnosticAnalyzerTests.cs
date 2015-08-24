@@ -96,5 +96,29 @@ namespace Protobuf.CodeFixes.Test
             var error2 = GetExpectedError(12, 26, 1, "SomeProperty, SomeField");
             VerifyCSharpDiagnostic(source, error1, error2);
         }
+
+        [Fact]
+        public void Same_tag_on_protomember_and_datamember_is_allowed()
+        {
+            const string source = @"    using System;
+    using System.Runtime.Serialization;
+    using ProtoBuf;
+
+    namespace Samples
+    {
+        class SampleType
+        {   
+            [ProtoMember(1)]
+            [DataMember(Order = 1)]
+            public string SomeProperty { get; set; }
+
+            [ProtoMember(2)]
+            [DataMember(Order = 2)]
+            public string SomeField;
+        }
+    }";
+
+            VerifyCSharpDiagnostic(source);
+        }
     }
 }

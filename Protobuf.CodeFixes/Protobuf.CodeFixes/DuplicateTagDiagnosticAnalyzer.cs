@@ -34,6 +34,12 @@ namespace Protobuf.CodeFixes
 
             foreach (var group in groupedByTag.Where(g=>g.Count() > 1))
             {
+                // If all the tags are on the same symbol, skip, it's not an error
+                if (group.Select(g => g.Symbol).Distinct().Count() == 1)
+                {
+                    continue;
+                }
+
                 var symbolList = string.Join(", ", group.Select(g => g.Symbol.Name));
 
                 foreach (var a in group)
