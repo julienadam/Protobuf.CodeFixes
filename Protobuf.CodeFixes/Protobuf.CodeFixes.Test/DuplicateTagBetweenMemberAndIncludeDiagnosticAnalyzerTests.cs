@@ -51,7 +51,7 @@ namespace Protobuf.CodeFixes.Test
             var error2 = GetExpectedError(9, 26, 1, "SampleType", "SomeField, include(SubType1)");
             VerifyCSharpDiagnostic(source, error1, error2);
         }
-        
+
         [Fact]
         public void Duplicate_tags_between_include_and_data_member_on_property_show_as_error()
         {

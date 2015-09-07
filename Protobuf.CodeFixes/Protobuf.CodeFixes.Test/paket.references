@@ -1,0 +1,17 @@
+Microsoft.CodeAnalysis.Analyzers
+Microsoft.CodeAnalysis.Common
+Microsoft.CodeAnalysis.CSharp
+Microsoft.CodeAnalysis.CSharp.Workspaces
+Microsoft.CodeAnalysis.VisualBasic
+Microsoft.CodeAnalysis.VisualBasic.Workspaces
+Microsoft.CodeAnalysis.Workspaces.Common
+Microsoft.Composition
+NFluent
+protobuf-net
+System.Collections.Immutable
+System.Reflection.Metadata
+xunit
+xunit.abstractions
+xunit.assert
+xunit.core
+xunit.extensibility.core

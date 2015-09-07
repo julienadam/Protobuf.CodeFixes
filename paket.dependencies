@@ -1,0 +1,23 @@
+source https://api.nuget.org/v3/index.json
+source https://www.nuget.org/api/v2/
+
+nuget Microsoft.CodeAnalysis.Analyzers 1.0.0
+nuget Microsoft.CodeAnalysis.Common 1.0.0
+nuget Microsoft.CodeAnalysis.CSharp 1.0.0
+nuget Microsoft.CodeAnalysis.CSharp.Workspaces 1.0.0
+nuget Microsoft.CodeAnalysis.VisualBasic 1.0.0 framework: >= net452
+nuget Microsoft.CodeAnalysis.VisualBasic.Workspaces 1.0.0 framework: >= net452
+nuget Microsoft.CodeAnalysis.Workspaces.Common 1.0.0
+nuget Microsoft.Composition 1.0.27
+nuget NFluent framework: >= net452
+nuget protobuf-net framework: >= net452
+nuget System.Collections.Immutable 1.1.36
+nuget System.Reflection.Metadata 1.0.21
+nuget xunit framework: >= net452
+nuget xunit.abstractions framework: >= net452
+nuget xunit.assert framework: >= net452
+nuget xunit.core framework: >= net452
+nuget xunit.extensibility.core framework: >= net452
+nuget xunit.runner.console framework: >= net452
+nuget NuGet.CommandLine 2.8.5 framework: >= net452
+nuget FAKE

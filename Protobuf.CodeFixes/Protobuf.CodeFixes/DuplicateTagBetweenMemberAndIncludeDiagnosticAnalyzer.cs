@@ -21,8 +21,11 @@ namespace Protobuf.CodeFixes
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat,
             Category, DiagnosticSeverity.Error, true, Description);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+        {
+            get { return ImmutableArray.Create(Rule); }
+        }
+        
         public override void Initialize(AnalysisContext context)
         {
             context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
@@ -30,7 +33,7 @@ namespace Protobuf.CodeFixes
 
         private void AnalyzeSymbol(SymbolAnalysisContext context)
         {
-            var type = (INamedTypeSymbol) context.Symbol;
+            var type = (INamedTypeSymbol)context.Symbol;
             var include = type.GetIncludeAttributeData().ToList();
 
             // Bail early if no include
