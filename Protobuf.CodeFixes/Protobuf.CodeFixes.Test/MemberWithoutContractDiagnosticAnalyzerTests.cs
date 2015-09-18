@@ -2,12 +2,9 @@
 
 namespace Protobuf.CodeFixes.Test
 {
-    public class MemberWithoutContractDiagnosticAnalyzerTests :
-        ProtobufDiagnosticAnalyzerTestsBase<MemberWithoutContractDiagnosticAnalyzer>
+    public class MemberWithoutContractDiagnosticAnalyzerTests
+         : ProtobufBootstrappedDiagnosticAnalyzerTestsBase<MemberWithoutContractDiagnosticAnalyzer>
     {
-        protected override string DiagnosticId { get; } = MemberWithoutContractDiagnosticAnalyzer.DiagnosticId;
-        protected override string MessageFormat { get; } = MemberWithoutContractDiagnosticAnalyzer.MessageFormat;
-
         [Fact]
         public void No_error_for_class_with_protomember_and_protocontract()
         {

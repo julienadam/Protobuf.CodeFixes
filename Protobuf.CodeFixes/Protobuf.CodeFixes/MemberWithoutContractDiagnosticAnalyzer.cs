@@ -8,41 +8,25 @@ using Protobuf.CodeFixes.AttributeData;
 namespace Protobuf.CodeFixes
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class MemberWithoutContractDiagnosticAnalyzer : DiagnosticAnalyzer
+    public class MemberWithoutContractDiagnosticAnalyzer : ProtobufDiagnosticAnalyzerBase
     {
-        public const string DiagnosticId = "Protobuf-net code fixes : member found on class without contract";
-        public const string Title = "Protobuf-net code fixes : member found on class without contract";
-        public const string MessageFormat = "DataMember or ProtoMember tag found in class {0} that has no ProtoContract or DataContract attribute";
-        public const string Description = "A class with members that have ProtoMember or ProtoContract attributes must have either a ProtoContract or a DataContract attribute";
-        public const string Category = "Protobuf";
+        public override string DiagnosticId => "Protobuf-net code fixes : member found on class without contract";
+        public override string Title => "Protobuf-net code fixes : member found on class without contract";
+        public override string MessageFormat => "DataMember or ProtoMember tag found in class {0} that has no ProtoContract or DataContract attribute";
+        public override string Description => "A class with members that have ProtoMember or ProtoContract attributes must have either a ProtoContract or a DataContract attribute";
+        public override DiagnosticSeverity Severity => DiagnosticSeverity.Warning;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description);
-
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        public override void Initialize(AnalysisContext context)
+        public override void Analyze(SymbolAnalysisContext context, IEnumerable<IncludeAttributeData> includeTags, IEnumerable<ProtobufAttributeData> memberTags)
         {
-            context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
-        }
+            if (!memberTags.Any()) return;
 
-        private void AnalyzeSymbol(SymbolAnalysisContext context)
-        {
-            var type = (INamedTypeSymbol)context.Symbol;
-            var membersWithAttributes = type
-                .GetMembers()
-                .Select(m => m.GetMemberAttributeData())
-                .Where(a => a != null);
+            var classAttributes = context.Symbol.GetAttributes();
+            var protoContractAttribute = classAttributes.FirstOrDefault(a => a.AttributeClass.Name == "ProtoContractAttribute");
+            var dataContractAttribute = classAttributes.FirstOrDefault(a => a.AttributeClass.Name == "DataContractAttribute");
 
-            if (membersWithAttributes.Any())
+            if (protoContractAttribute == null && dataContractAttribute == null)
             {
-                var classAttributes = context.Symbol.GetAttributes();
-                var protoContractAttribute = classAttributes.FirstOrDefault(a => a.AttributeClass.Name == "ProtoContractAttribute");
-                var dataContractAttribute = classAttributes.FirstOrDefault(a => a.AttributeClass.Name == "DataContractAttribute");
-
-                if (protoContractAttribute == null && dataContractAttribute == null)
-                {
-                    context.ReportDiagnostic(Diagnostic.Create(Rule, context.Symbol.Locations.First(), context.Symbol.Name));
-                }
+                context.ReportDiagnostic(Diagnostic.Create(GetDescriptor(), context.Symbol.Locations.First(), context.Symbol.Name));
             }
         }
     }
