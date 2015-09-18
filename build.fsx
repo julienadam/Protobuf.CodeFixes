@@ -7,15 +7,20 @@ let buildDir = "bin/release"
 let appReferences  = 
     !! "**/*.csproj"
 
+Target "paket" (fun _ ->
+    ()
+)
+
 Target "build" (fun _ ->
     MSBuildRelease buildDir "Build" appReferences
         |> Log "AppBuild-Output: "
 )
 
-// define test dlls
-let testDlls = !! (buildDir @@ "**/*.Test.dll")
 
 Target "test" (fun _ ->
+    // define test dlls
+    let testDlls = !! (buildDir @@ "**/*.Test.dll")
+    
     testDlls
         |> xUnit (fun p -> 
         { 
@@ -25,12 +30,26 @@ Target "test" (fun _ ->
         })
 )
 
-Target "package" (fun _ -> 
+Target "nuget" (fun _ -> 
+    let version = 
+        match buildVersion with
+        | "LocalBuild" -> "0.0.0.0"
+        | _ -> buildVersion
+
+    NuGet (fun p -> 
+        {p with
+            OutputPath = buildDir
+            WorkingDir = buildDir
+            Version = version
+            Publish = false 
+        }) ("Protobuf.CodeFixes" @@ "Protobuf.CodeFixes" @@ "Diagnostic.nuspec")
+    
     ()
 )
 
-"build"
+"paket"
+    ==> "build"
     ==> "test"
-    ==> "package"
+    ==> "nuget"
     
 RunTargetOrDefault "build"

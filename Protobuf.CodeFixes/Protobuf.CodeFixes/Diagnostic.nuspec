@@ -4,16 +4,16 @@
     <id>Protobuf.CodeFixes</id>
     <version>1.0.0.0</version>
     <title>Protobuf.CodeFixes</title>
-    <authors>Nidhogg</authors>
-    <owners>Nidhogg</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <authors>Julien Adam</authors>
+    <owners>Julien Adam</owners>
+    <licenseUrl>https://github.com/julienadam/Protobuf.CodeFixes/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/julienadam/Protobuf.CodeFixes</projectUrl>
+    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Protobuf.CodeFixes</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-    <copyright>Copyright</copyright>
-    <tags>Protobuf.CodeFixes, analyzers</tags>
+    <releaseNotes></releaseNotes>
+    <copyright></copyright>
+    <tags>roslyn, analyzers, protobuf, codefix</tags>
   </metadata>
   <!-- The convention for analyzers is to put language agnostic dlls in analyzers\dotnet and language specific analyzers in either analyzers\dotnet\cs or analyzers\dotnet\vb -->
   <files>

@@ -14,7 +14,10 @@ namespace Protobuf.CodeFixes
 
         public ProtobufBootstrapperDiagnosticAnalyzer()
         {
-            //TODO: load all available analyzers
+            analyzers = new ProtobufDiagnosticAnalyzerBase[]
+            {
+                // TODO: load all analyzers
+            };
         }
 
         public ProtobufBootstrapperDiagnosticAnalyzer(params ProtobufDiagnosticAnalyzerBase[] analyzers)
