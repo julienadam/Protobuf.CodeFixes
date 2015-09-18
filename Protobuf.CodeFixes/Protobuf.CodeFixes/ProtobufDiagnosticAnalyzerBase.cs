@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Protobuf.CodeFixes.AttributeData;
 
 namespace Protobuf.CodeFixes
 {
@@ -16,6 +18,6 @@ namespace Protobuf.CodeFixes
             return new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, "Protobuf", Severity, true, Description);
         }
 
-        public abstract void Analyze(SymbolAnalysisContext symbolAnalysisContext);
+        public abstract void Analyze(SymbolAnalysisContext context, IEnumerable<IncludeAttributeData> includeTags, IEnumerable<ProtobufAttributeData> memberTags);
     }
 }

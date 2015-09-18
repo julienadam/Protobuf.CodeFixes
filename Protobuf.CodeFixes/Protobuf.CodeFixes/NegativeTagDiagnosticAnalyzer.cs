@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -8,23 +7,19 @@ using Protobuf.CodeFixes.AttributeData;
 namespace Protobuf.CodeFixes
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class NegativeTagDiagnosticAnalyzer : ProtobufTagDiagnosticAnalyzerBase
+    public class NegativeTagDiagnosticAnalyzer : ProtobufDiagnosticAnalyzerBase
     {
-        public const string DiagnosticId = "Protobuf-net code fixes : tag is negative";
-        public const string Title = "Protobuf-net code fixes : tag is negative";
-        public const string MessageFormat = "ProtoBuf tag set to a negative value on {0}";
-        public const string Description = "The Protocol Buffers specifications forbid using negative values for a tag identifier";
-        public const string Category = "Protobuf";
+        public override string DiagnosticId => "Protobuf-net code fixes : tag is negative";
+        public override string Title => "Protobuf-net code fixes : tag is negative";
+        public override string MessageFormat => "ProtoBuf tag set to a negative value on {0}";
+        public override string Description => "The Protocol Buffers specifications forbid using negative values for a tag identifier";
+        public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Error, true, Description);
-
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        protected override void AnalyzeSymbolCore(IEnumerable<ProtobufAttributeData> attributes, SymbolAnalysisContext context)
+        public override void Analyze(SymbolAnalysisContext context, IEnumerable<IncludeAttributeData> includeTags, IEnumerable<ProtobufAttributeData> memberTags)
         {
-            foreach (var attributeData in attributes.Where(a => a.Tag < 0))
+            foreach (var tag in memberTags.Where(a => a.Tag < 0))
             {
-                context.ReportDiagnostic(Diagnostic.Create(Rule, attributeData.GetLocation(), context.Symbol.Name));
+                context.ReportDiagnostic(Diagnostic.Create(GetDescriptor(), tag.GetLocation(), tag.Symbol.Name));
             }
         }
     }

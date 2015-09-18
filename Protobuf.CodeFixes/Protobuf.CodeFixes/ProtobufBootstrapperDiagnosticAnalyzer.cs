@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Protobuf.CodeFixes.AttributeData;
 
 namespace Protobuf.CodeFixes
 {
@@ -38,14 +40,31 @@ namespace Protobuf.CodeFixes
             });
         }
 
-        private void Action(SymbolAnalysisContext symbolAnalysisContext)
+        private void Action(SymbolAnalysisContext context)
         {
+            var namedTypeSymbol = context.Symbol as INamedTypeSymbol;
+            if (namedTypeSymbol == null)
+            {
+                return;
+            }
+
             foreach (var analyzer in analyzers)
             {
-                analyzer.Analyze(symbolAnalysisContext);
+                // Load all tag data
+                var includeTags = context.Symbol.GetIncludeAttributeData();
+                var memberTags = GetMemberTags(namedTypeSymbol);
+
+                analyzer.Analyze(context, includeTags, memberTags);
             }
         }
-        
+
+        public IEnumerable<ProtobufAttributeData> GetMemberTags(INamedTypeSymbol type)
+        {
+            return (type.GetMembers()
+                .Where(member => member is IFieldSymbol || member is IPropertySymbol)
+                .SelectMany(member => member.GetMemberAttributeData()));
+        }
+
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
     }
 }

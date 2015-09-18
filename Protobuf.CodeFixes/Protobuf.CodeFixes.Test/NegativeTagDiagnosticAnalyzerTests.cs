@@ -2,11 +2,8 @@
 
 namespace Protobuf.CodeFixes.Test
 {
-    public class NegativeTagDiagnosticAnalyzerTests : ProtobufDiagnosticAnalyzerTestsBase<NegativeTagDiagnosticAnalyzer>
+    public class NegativeTagDiagnosticAnalyzerTests : ProtobufBootstrappedDiagnosticAnalyzerTestsBase<NegativeTagDiagnosticAnalyzer>
     {
-        protected override string DiagnosticId { get; } = NegativeTagDiagnosticAnalyzer.DiagnosticId;
-        protected override string MessageFormat { get; } = NegativeTagDiagnosticAnalyzer.MessageFormat;
-        
         [Fact]
         public void No_error_on_positive_tag_on_field()
         {

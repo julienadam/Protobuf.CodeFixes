@@ -51,4 +51,16 @@ namespace Protobuf.CodeFixes.Test
             return GetExpectedResult(line, column, DiagnosticSeverity.Warning, formatParameters);
         }
     }
+
+    public abstract class ProtobufBootstrappedDiagnosticAnalyzerTestsBase<T> : ProtobufDiagnosticAnalyzerTestsBase<ProtobufBootstrapperDiagnosticAnalyzer>
+        where T : ProtobufDiagnosticAnalyzerBase, new()
+    {
+        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
+        {
+            return new ProtobufBootstrapperDiagnosticAnalyzer(new T());
+        }
+
+        protected override string DiagnosticId => new T().DiagnosticId;
+        protected override string MessageFormat => new T().MessageFormat;
+    }
 }
