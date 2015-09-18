@@ -2,12 +2,8 @@
 
 namespace Protobuf.CodeFixes.Test
 {
-    public class DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzerTests :
-        ProtobufDiagnosticAnalyzerTestsBase<DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer>
+    public class DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzerTests : ProtobufBootstrappedDiagnosticAnalyzerTestsBase<DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer>
     {
-        protected override string DiagnosticId { get; } = DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer.DiagnosticId;
-        protected override string MessageFormat { get; } = DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer.MessageFormat;
-
         [Fact]
         public void Duplicate_tags_between_include_and_protomember_on_property_show_as_error()
         {
@@ -25,8 +21,8 @@ namespace Protobuf.CodeFixes.Test
         class SubType1 : SampleType { }
     }";
 
-            var error1 = GetExpectedError(6, 23, 1, "SampleType", "SomeProperty, include(SubType1)");
-            var error2 = GetExpectedError(9, 26, 1, "SampleType", "SomeProperty, include(SubType1)");
+            var error1 = GetExpectedError(6, 23, 1, "SampleType", "include(SubType1), SomeProperty");
+            var error2 = GetExpectedError(9, 26, 1, "SampleType", "include(SubType1), SomeProperty");
             VerifyCSharpDiagnostic(source, error1, error2);
         }
 
@@ -47,8 +43,8 @@ namespace Protobuf.CodeFixes.Test
         class SubType1 : SampleType { }
     }";
 
-            var error1 = GetExpectedError(6, 23, 1, "SampleType", "SomeField, include(SubType1)");
-            var error2 = GetExpectedError(9, 26, 1, "SampleType", "SomeField, include(SubType1)");
+            var error1 = GetExpectedError(6, 23, 1, "SampleType", "include(SubType1), SomeField");
+            var error2 = GetExpectedError(9, 26, 1, "SampleType", "include(SubType1), SomeField");
             VerifyCSharpDiagnostic(source, error1, error2);
         }
 
@@ -70,8 +66,8 @@ namespace Protobuf.CodeFixes.Test
         class SubType1 : SampleType { }
     }";
 
-            var error1 = GetExpectedError(7, 23, 1, "SampleType", "SomeProperty, include(SubType1)");
-            var error2 = GetExpectedError(10, 33, 1, "SampleType", "SomeProperty, include(SubType1)");
+            var error1 = GetExpectedError(7, 23, 1, "SampleType", "include(SubType1), SomeProperty");
+            var error2 = GetExpectedError(10, 33, 1, "SampleType", "include(SubType1), SomeProperty");
             VerifyCSharpDiagnostic(source, error1, error2);
         }
 
@@ -93,8 +89,8 @@ namespace Protobuf.CodeFixes.Test
         class SubType1 : SampleType { }
     }";
 
-            var error1 = GetExpectedError(7, 23, 1, "SampleType", "SomeField, include(SubType1)");
-            var error2 = GetExpectedError(10, 33, 1, "SampleType", "SomeField, include(SubType1)");
+            var error1 = GetExpectedError(7, 23, 1, "SampleType", "include(SubType1), SomeField");
+            var error2 = GetExpectedError(10, 33, 1, "SampleType", "include(SubType1), SomeField");
             VerifyCSharpDiagnostic(source, error1, error2);
         }
     }

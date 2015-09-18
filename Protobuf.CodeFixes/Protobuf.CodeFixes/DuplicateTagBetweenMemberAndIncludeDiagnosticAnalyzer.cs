@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -7,61 +8,39 @@ using Protobuf.CodeFixes.AttributeData;
 namespace Protobuf.CodeFixes
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer : DiagnosticAnalyzer
+    public class DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer : ProtobufDiagnosticAnalyzerBase
     {
-        public const string DiagnosticId = "Protobuf-net code fixes : duplicate tag between member and include tags";
-        public const string Title = "Protobuf-net code fixes : duplicate tag between member and include tags";
-        public const string MessageFormat = "Duplicate tag {0} on {1}: {2}";
+        public override string DiagnosticId => "Protobuf-net code fixes : duplicate tag between member and include tags";
+        public override string Title => "Protobuf-net code fixes : duplicate tag between member and include tags";
+        public override string MessageFormat => "Duplicate tag {0} on {1}: {2}";
+        public override string Description => "The Protocol Buffers specifications forbid using the same tag more than once, including tags used for subtypes";
+        public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
 
-        public const string Description =
-            "The Protocol Buffers specifications forbid using the same tag more than once, including tags used for subtypes";
-
-        public const string Category = "Protobuf";
-
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat,
-            Category, DiagnosticSeverity.Error, true, Description);
-
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+        public override void Analyze(SymbolAnalysisContext context, IEnumerable<IncludeAttributeData> includeTags, IEnumerable<ProtobufAttributeData> memberTags)
         {
-            get { return ImmutableArray.Create(Rule); }
-        }
-        
-        public override void Initialize(AnalysisContext context)
-        {
-            context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
-        }
-
-        private void AnalyzeSymbol(SymbolAnalysisContext context)
-        {
-            var type = (INamedTypeSymbol)context.Symbol;
-            var include = type.GetIncludeAttributeData().ToList();
-
-            // Bail early if no include
-            if (include.Any())
+            if (!includeTags.Any())
             {
-                // Get full list of attributes, member and include
-                var members = type.GetMembers()
-                    .SelectMany(m => m.GetMemberAttributeData())
-                    .Concat(include)
-                    .Where(a => a != null);
+                return;
+            }
 
-                // Group it by tag
-                var groupedByTag = members
-                    .GroupBy(m => m.Tag)
-                    .ToList();
+            var allTags = includeTags.Concat(memberTags);
+           
+            // Group it by tag
+            var groupedByTag = allTags
+                .GroupBy(m => m.Tag)
+                .ToList();
 
-                // Any group with more than one element is suspicious
-                foreach (var group in groupedByTag.Where(g => g.Count() > 1))
+            // Any group with more than one element is suspicious
+            foreach (var group in groupedByTag.Where(g => g.Count() > 1))
+            {
+                // Any group with an include means an error
+                if (group.Any(a => a is ProtoIncludeAttributeData))
                 {
-                    // Any group with an include means an error
-                    if (group.Any(a => a is ProtoIncludeAttributeData))
+                    var symbolList = string.Join(", ", group.Select(g => g.GetRelevantSymbolName()));
+                    foreach (var a in group)
                     {
-                        var symbolList = string.Join(", ", group.Select(g => g.GetRelevantSymbolName()));
-                        foreach (var a in group)
-                        {
-                            var diagnostic = Diagnostic.Create(Rule, a.GetLocation(), a.Tag, type.Name, symbolList);
-                            context.ReportDiagnostic(diagnostic);
-                        }
+                        var diagnostic = Diagnostic.Create(GetDescriptor(), a.GetLocation(), a.Tag, context.Symbol.Name, symbolList);
+                        context.ReportDiagnostic(diagnostic);
                     }
                 }
             }
