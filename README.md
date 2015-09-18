@@ -17,6 +17,7 @@ Planned features:
 * Missing `ProtoInclude` for derived classes with `DataContract` / `ProtoContract` / `ProtoMember` / `DataMember` attributes
 * Inconsistencies between `DataContract` / `ProtoContract`
 * Re-number tags on existing `ProtoMember` / `DataMember` attributes
+* Reorder members according to existing `ProtoMember` / `DataMember` tags
 * Add tags to properties or fields on existing class marked with *Contract attributes
 * Switching from Data* to Proto* tags
 
