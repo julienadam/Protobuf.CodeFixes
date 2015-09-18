@@ -16,7 +16,7 @@ namespace Protobuf.CodeFixes
         public override string Description => "The Protocol Buffers specifications forbid using the same tag more than once, including tags used for subtypes";
         public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
 
-        public override void Analyze(SymbolAnalysisContext context, IEnumerable<IncludeAttributeData> includeTags, IEnumerable<ProtobufAttributeData> memberTags)
+        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags)
         {
             if (!includeTags.Any())
             {

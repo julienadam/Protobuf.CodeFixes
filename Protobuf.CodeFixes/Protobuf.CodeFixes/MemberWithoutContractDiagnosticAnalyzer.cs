@@ -16,7 +16,7 @@ namespace Protobuf.CodeFixes
         public override string Description => "A class with members that have ProtoMember or ProtoContract attributes must have either a ProtoContract or a DataContract attribute";
         public override DiagnosticSeverity Severity => DiagnosticSeverity.Warning;
 
-        public override void Analyze(SymbolAnalysisContext context, IEnumerable<IncludeAttributeData> includeTags, IEnumerable<ProtobufAttributeData> memberTags)
+        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags)
         {
             if (!memberTags.Any()) return;
 

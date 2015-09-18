@@ -12,11 +12,11 @@ namespace Protobuf.CodeFixes
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ProtobufBootstrapperDiagnosticAnalyzer : DiagnosticAnalyzer
     {
-        private readonly ProtobufDiagnosticAnalyzerBase[] analyzers;
+        public ProtobufDiagnosticAnalyzerBase[] Analyzers { get; }
 
         public ProtobufBootstrapperDiagnosticAnalyzer()
         {
-            analyzers = new ProtobufDiagnosticAnalyzerBase[]
+            Analyzers = new ProtobufDiagnosticAnalyzerBase[]
             {
                 // TODO: load all analyzers
             };
@@ -24,7 +24,7 @@ namespace Protobuf.CodeFixes
 
         public ProtobufBootstrapperDiagnosticAnalyzer(params ProtobufDiagnosticAnalyzerBase[] analyzers)
         {
-            this.analyzers = analyzers;
+            this.Analyzers = analyzers;
             SupportedDiagnostics = analyzers.Select(a => a.GetDescriptor()).ToImmutableArray();
         }
 
@@ -48,12 +48,12 @@ namespace Protobuf.CodeFixes
                 return;
             }
 
-            foreach (var analyzer in analyzers)
-            {
-                // Load all tag data
-                var includeTags = context.Symbol.GetIncludeAttributeData();
-                var memberTags = GetMemberTags(namedTypeSymbol);
+            // Load all tag data
+            var includeTags = context.Symbol.GetIncludeAttributeData().ToList();
+            var memberTags = GetMemberTags(namedTypeSymbol).ToList();
 
+            foreach (var analyzer in Analyzers)
+            {
                 analyzer.Analyze(context, includeTags, memberTags);
             }
         }

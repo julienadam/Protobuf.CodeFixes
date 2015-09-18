@@ -16,7 +16,7 @@ namespace Protobuf.CodeFixes
         public override string Description => "The Protocol Buffers specifications forbid using 0 for a tag identifier";
         public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
 
-        public override void Analyze(SymbolAnalysisContext context, IEnumerable<IncludeAttributeData> includeTags, IEnumerable<ProtobufAttributeData> memberTags)
+        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags)
         {
             foreach (var tag in memberTags.Where(t => t.Tag == 0))
             {
