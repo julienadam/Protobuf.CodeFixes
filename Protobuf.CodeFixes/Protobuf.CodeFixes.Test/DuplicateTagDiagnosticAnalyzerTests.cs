@@ -2,11 +2,8 @@
 
 namespace Protobuf.CodeFixes.Test
 {
-    public class DuplicateTagDiagnosticAnalyzerTests : ProtobufDiagnosticAnalyzerTestsBase<DuplicateTagDiagnosticAnalyzer>
+    public class DuplicateTagDiagnosticAnalyzerTests : ProtobufBootstrappedDiagnosticAnalyzerTestsBase<DuplicateTagDiagnosticAnalyzer>
     {
-        protected override string DiagnosticId { get; } = DuplicateTagDiagnosticAnalyzer.DiagnosticId;
-        protected override string MessageFormat { get; } = DuplicateTagDiagnosticAnalyzer.MessageFormat;
-
         [Fact]
         public void No_error_on_different_tags_for_property()
         {

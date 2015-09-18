@@ -1,38 +1,27 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Protobuf.CodeFixes.AttributeData;
 
 namespace Protobuf.CodeFixes
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class DuplicateTagDiagnosticAnalyzer : DiagnosticAnalyzer
+    public class DuplicateTagDiagnosticAnalyzer : ProtobufDiagnosticAnalyzerBase
     {
-        public const string DiagnosticId = "Protobuf-net code fixes : duplicate tag";
-        public const string Title = "Protobuf-net code fixes : duplicate tag";
-        public const string MessageFormat = "Duplicate tag {0} on {1}";
-        public const string Description = "The Protocol Buffers specifications forbid using the same tag more than once";
-        public const string Category = "Protobuf";
+        public override string DiagnosticId => "Protobuf-net code fixes : duplicate tag";
+        public override string Title => "Protobuf-net code fixes : duplicate tag";
+        public override string MessageFormat => "Duplicate tag {0} on {1}";
+        public override string Description => "The Protocol Buffers specifications forbid using the same tag more than once";
+        public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Error, true, Description);
-
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        public override void Initialize(AnalysisContext context)
+        public override void Analyze(SymbolAnalysisContext context, IEnumerable<IncludeAttributeData> includeTags, IEnumerable<ProtobufAttributeData> memberTags)
         {
-            context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
-        }
+            var groupedByTag = memberTags
+               .GroupBy(m => m.Tag);
 
-        private void AnalyzeSymbol(SymbolAnalysisContext context)
-        {
-            var type = (INamedTypeSymbol) context.Symbol;
-            var members = type.GetMembers();
-            var groupedByTag = members
-                .SelectMany(m => m.GetMemberAttributeData())
-                .Where(a => a != null)
-                .GroupBy(m => m.Tag);
-
-            foreach (var group in groupedByTag.Where(g=>g.Count() > 1))
+            foreach (var group in groupedByTag.Where(g => g.Count() > 1))
             {
                 // If all the tags are on the same symbol, skip, it's not an error
                 if (group.Select(g => g.Symbol).Distinct().Count() == 1)
@@ -44,7 +33,7 @@ namespace Protobuf.CodeFixes
 
                 foreach (var a in group)
                 {
-                    var diagnostic = Diagnostic.Create(Rule, a.GetLocation(), a.Tag, symbolList);
+                    var diagnostic = Diagnostic.Create(GetDescriptor(), a.GetLocation(), a.Tag, symbolList);
                     context.ReportDiagnostic(diagnostic);
                 }
             }
