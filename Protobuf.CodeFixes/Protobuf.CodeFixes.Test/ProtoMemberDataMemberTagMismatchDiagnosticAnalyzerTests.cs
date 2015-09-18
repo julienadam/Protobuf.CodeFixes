@@ -2,12 +2,9 @@
 
 namespace Protobuf.CodeFixes.Test
 {
-    public class ProtoMemberDataMemberTagMismatchDiagnosticAnalyzerTests :
-        ProtobufDiagnosticAnalyzerTestsBase<ProtoMemberDataMemberTagMismatchDiagnosticAnalyzer>
+    public class ProtoMemberDataMemberTagMismatchDiagnosticAnalyzerTests 
+        : ProtobufBootstrappedDiagnosticAnalyzerTestsBase<ProtoMemberDataMemberTagMismatchDiagnosticAnalyzer>
     {
-        protected override string DiagnosticId { get; } = ProtoMemberDataMemberTagMismatchDiagnosticAnalyzer.DiagnosticId;
-        protected override string MessageFormat { get; } = ProtoMemberDataMemberTagMismatchDiagnosticAnalyzer.MessageFormat;
-
         [Fact]
         public void No_mismatch_when_the_tags_are_the_same()
         {
