@@ -2,11 +2,8 @@
 
 namespace Protobuf.CodeFixes.Test
 {
-    public class ReservedTagDiagnosticAnalyzerTests : ProtobufDiagnosticAnalyzerTestsBase<ReservedTagDiagnosticAnalyzer>
+    public class ReservedTagDiagnosticAnalyzerTests : ProtobufBootstrappedDiagnosticAnalyzerTestsBase<ReservedTagDiagnosticAnalyzer>
     {
-        protected override string DiagnosticId { get; } = ReservedTagDiagnosticAnalyzer.DiagnosticId;
-        protected override string MessageFormat { get; } = ReservedTagDiagnosticAnalyzer.MessageFormat;
-
         [Fact]
         public void No_error_on_non_reserved_tag_for_property()
         {
