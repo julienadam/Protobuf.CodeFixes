@@ -2,12 +2,8 @@
 
 namespace Protobuf.CodeFixes.Test
 {
-    public class DuplicateTagOnIncludeDiagnosticAnalyzerTests :
-        ProtobufDiagnosticAnalyzerTestsBase<DuplicateTagOnIncludeDiagnosticAnalyzer>
+    public class DuplicateTagOnIncludeDiagnosticAnalyzerTests : ProtobufBootstrappedDiagnosticAnalyzerTestsBase<DuplicateTagOnIncludeDiagnosticAnalyzer>
     {
-        protected override string DiagnosticId { get; } = DuplicateTagOnIncludeDiagnosticAnalyzer.DiagnosticId;
-        protected override string MessageFormat { get; } = DuplicateTagOnIncludeDiagnosticAnalyzer.MessageFormat;
-
         [Fact]
         public void Different_proto_include_tags_are_ok()
         {
