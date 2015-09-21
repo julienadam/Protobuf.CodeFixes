@@ -15,7 +15,7 @@ namespace Protobuf.CodeFixes.Test
         public override string MessageFormat => "aMessageFormat";
         public override string Description => "aDescription";
         public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
-        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags)
+        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags, List<ContractAttributeData> contractAttributes)
         {
             MemberTags.Add(context.Symbol.Name, memberTags);
             IncludeTags.Add(context.Symbol.Name, includeTags);
@@ -53,7 +53,7 @@ namespace Protobuf.CodeFixes.Test
         }
 
         [Fact]
-        public void Proto_include_is_passed_to_analyzers()
+        public void Proto_include_is_passed_to_analyzers_with_included_type()
         {
             const string source = @"    using System;
     using ProtoBuf;
@@ -68,6 +68,8 @@ namespace Protobuf.CodeFixes.Test
     }";
             var testAnalyzer = GetTestAnalyze(VerifyCSharpDiagnostic(source));
             Check.That(testAnalyzer.IncludeTags["SampleType"]).HasSize(2);
+            Check.That(testAnalyzer.IncludeTags["SampleType"][0].IncludedType.Name).IsEqualTo("SubType1");
+            Check.That(testAnalyzer.IncludeTags["SampleType"][1].IncludedType.Name).IsEqualTo("SubType2");
             Check.That(testAnalyzer.MemberTags["SampleType"]).IsEmpty();
         }
 

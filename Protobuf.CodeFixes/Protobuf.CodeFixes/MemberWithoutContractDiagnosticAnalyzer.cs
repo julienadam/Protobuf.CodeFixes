@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -16,15 +15,11 @@ namespace Protobuf.CodeFixes
         public override string Description => "A class with members that have ProtoMember or ProtoContract attributes must have either a ProtoContract or a DataContract attribute";
         public override DiagnosticSeverity Severity => DiagnosticSeverity.Warning;
 
-        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags)
+        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags, List<ContractAttributeData> contractAttributes)
         {
             if (!memberTags.Any()) return;
-
-            var classAttributes = context.Symbol.GetAttributes();
-            var protoContractAttribute = classAttributes.FirstOrDefault(a => a.AttributeClass.Name == "ProtoContractAttribute");
-            var dataContractAttribute = classAttributes.FirstOrDefault(a => a.AttributeClass.Name == "DataContractAttribute");
-
-            if (protoContractAttribute == null && dataContractAttribute == null)
+            
+            if (contractAttributes.Count == 0)
             {
                 context.ReportDiagnostic(Diagnostic.Create(GetDescriptor(), context.Symbol.Locations.First(), context.Symbol.Name));
             }

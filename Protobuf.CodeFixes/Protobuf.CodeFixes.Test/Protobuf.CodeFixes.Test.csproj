@@ -53,6 +53,7 @@
     <Compile Include="ProtoMemberDataMemberTagMismatchDiagnosticAnalyzerTests.cs" />
     <Compile Include="NegativeTagDiagnosticAnalyzerTests.cs" />
     <Compile Include="MemberWithoutContractDiagnosticAnalyzerTests.cs" />
+    <Compile Include="ProtoAttributesOnDerivedClassWithoutProtoIncludeTests.cs" />
     <Compile Include="TagZeroDiagnosticAnalyzerTests.cs" />
     <Compile Include="ProtobufBootstrapperDiagnosticAnalyzerTests.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />

@@ -32,13 +32,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AttributeData\ContractAttributeData.cs" />
+    <Compile Include="AttributeData\DataContractAttributeData.cs" />
     <Compile Include="AttributeData\IncludeAttributeData.cs" />
     <Compile Include="AttributeData\MemberAttributeData.cs" />
+    <Compile Include="AttributeData\ProtoContractAttributeData.cs" />
+    <Compile Include="AttributeData\ProtoIncludeAttributeData.cs" />
     <Compile Include="CodeFixProvider.cs" />
     <Compile Include="AttributeData\DataMemberAttributeData.cs" />
     <Compile Include="AttributeData\ProtobufAttributeData.cs" />
     <Compile Include="DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer.cs" />
     <Compile Include="DuplicateTagOnIncludeDiagnosticAnalyzer.cs" />
+    <Compile Include="ProtoAttributesOnDerivedClassWithoutProtoInclude.cs" />
     <Compile Include="ProtobufBootstrapperDiagnosticAnalyzer.cs" />
     <Compile Include="ProtobufDiagnosticAnalyzerBase.cs" />
     <Compile Include="ReservedTagDiagnosticAnalyzer.cs" />

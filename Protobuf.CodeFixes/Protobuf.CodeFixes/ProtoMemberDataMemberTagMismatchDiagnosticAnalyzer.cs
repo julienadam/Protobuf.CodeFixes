@@ -16,7 +16,7 @@ namespace Protobuf.CodeFixes
         public override string Description => "If you are setting both ProtoMember and DataMember, they should have the same tag";
         public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
 
-        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags)
+        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags, List<ContractAttributeData> contractAttributes)
         {
             var grouped = memberTags.GroupBy(t => t.Symbol);
 

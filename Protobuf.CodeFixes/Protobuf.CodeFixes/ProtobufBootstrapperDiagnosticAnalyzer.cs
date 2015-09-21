@@ -49,21 +49,16 @@ namespace Protobuf.CodeFixes
             }
 
             // Load all tag data
-            var includeTags = context.Symbol.GetIncludeAttributeData().ToList();
-            var memberTags = GetMemberTags(namedTypeSymbol).ToList();
+            var contractAttributes = namedTypeSymbol.GetContractAttributeData().ToList();
+            var includeTags = namedTypeSymbol.GetIncludeAttributeData().ToList();
+            var memberTags = namedTypeSymbol.GetMembersAttributeDate().ToList();
 
             foreach (var analyzer in Analyzers)
             {
-                analyzer.Analyze(context, includeTags, memberTags);
+                analyzer.Analyze(context, includeTags, memberTags, contractAttributes);
             }
         }
 
-        public IEnumerable<ProtobufAttributeData> GetMemberTags(INamedTypeSymbol type)
-        {
-            return (type.GetMembers()
-                .Where(member => member is IFieldSymbol || member is IPropertySymbol)
-                .SelectMany(member => member.GetMemberAttributeData()));
-        }
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
     }

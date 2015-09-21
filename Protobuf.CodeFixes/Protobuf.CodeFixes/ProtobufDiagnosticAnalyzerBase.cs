@@ -18,6 +18,6 @@ namespace Protobuf.CodeFixes
             return new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, "Protobuf", Severity, true, Description);
         }
 
-        public abstract void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags);
+        public abstract void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags, List<ContractAttributeData> contractAttributes);
     }
 }

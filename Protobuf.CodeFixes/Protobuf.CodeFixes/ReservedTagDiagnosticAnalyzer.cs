@@ -15,7 +15,7 @@ namespace Protobuf.CodeFixes
         public override string Description => "The range from 19000 to 19999 is reserved for internal Protocol Buffers implementation and must not be used.";
         public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
 
-        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags)
+        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags, List<ContractAttributeData> contractAttributes)
         {
             foreach (var tag in memberTags.Where(a => a.Tag >= 19000 && a.Tag <= 19999))
             {

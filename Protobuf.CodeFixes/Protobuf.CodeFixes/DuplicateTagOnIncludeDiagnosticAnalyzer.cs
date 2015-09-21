@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -16,7 +15,7 @@ namespace Protobuf.CodeFixes
         public override string Description => "The Protocol Buffers specifications forbid using the same tag more than once, including tags used for subtypes";
         public override DiagnosticSeverity Severity => DiagnosticSeverity.Error;
 
-        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags)
+        public override void Analyze(SymbolAnalysisContext context, List<IncludeAttributeData> includeTags, List<ProtobufAttributeData> memberTags, List<ContractAttributeData> contractAttributes)
         {
             var type = (INamedTypeSymbol)context.Symbol;
             var attributes = type.GetIncludeAttributeData();
