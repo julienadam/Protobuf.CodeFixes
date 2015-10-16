@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Protobuf.CodeFixes.AttributeData;
+using System.Reflection;
+
 
 namespace Protobuf.CodeFixes
 {
@@ -14,17 +12,22 @@ namespace Protobuf.CodeFixes
     {
         public ProtobufDiagnosticAnalyzerBase[] Analyzers { get; }
 
-        public ProtobufBootstrapperDiagnosticAnalyzer()
+        public ProtobufBootstrapperDiagnosticAnalyzer() : this (
+            new DuplicateTagBetweenMemberAndIncludeDiagnosticAnalyzer(), 
+            new DuplicateTagDiagnosticAnalyzer(), 
+            new DuplicateTagOnIncludeDiagnosticAnalyzer(), 
+            new MemberWithoutContractDiagnosticAnalyzer(), 
+            new NegativeTagDiagnosticAnalyzer(), 
+            new ProtoAttributesOnDerivedClassWithoutProtoInclude(), 
+            new ProtoMemberDataMemberTagMismatchDiagnosticAnalyzer(), 
+            new ReservedTagDiagnosticAnalyzer(), 
+            new TagZeroDiagnosticAnalyzer())
         {
-            Analyzers = new ProtobufDiagnosticAnalyzerBase[]
-            {
-                // TODO: load all analyzers
-            };
         }
 
         public ProtobufBootstrapperDiagnosticAnalyzer(params ProtobufDiagnosticAnalyzerBase[] analyzers)
         {
-            this.Analyzers = analyzers;
+            Analyzers = analyzers;
             SupportedDiagnostics = analyzers.Select(a => a.GetDescriptor()).ToImmutableArray();
         }
 
